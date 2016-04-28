@@ -16,7 +16,8 @@ stack build
 stack exec training
 ```
 
-this will generate pair of trained gene in gene.txt
+this will generate pair of trained gene in gene.txt.
+
 there is no interface to amend parameters yet, you may edit Train.hs directly.
 
 ## Visualize
@@ -34,4 +35,5 @@ stack exec play
 ```
 
 try defeat them if you want.
-use 'i' to move up the paddle, 'j' to move down.
+
+use <kbd>i</kbd> to move up the paddle, <kbd>j</kbd> to move down.
