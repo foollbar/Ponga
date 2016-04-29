@@ -16,9 +16,9 @@ stack build
 stack exec training
 ```
 
-this will generate pair of trained gene in gene.txt.
+this will generate a pair of trained gene in gene.txt.
 
-there is no interface to amend parameters yet, you may edit Train.hs directly.
+there is no interface to amend training parameters yet, you may edit Train.hs directly.
 
 ## Visualize
 
@@ -26,7 +26,7 @@ there is no interface to amend parameters yet, you may edit Train.hs directly.
 stack exec visualize
 ```
 
-you can observe the play of generated genes.
+you can observe the play of the generated genes.
 
 ## Play
 
@@ -36,24 +36,20 @@ stack exec play
 
 try defeat them if you want.
 
-use <kbd>i</kbd> to move up the paddle, <kbd>j</kbd> to move down.
+use <kbd>i</kbd> to move up the paddle, <kbd>k</kbd> to move down.
 
 ## Simulation example
 
-* 10 Generation
+* Generation 10, 12 secs
 
 ![10 gene](https://cloud.githubusercontent.com/assets/1481772/14900008/8e17da34-0dc9-11e6-808e-5d5ae1c430a4.gif)
 
-12 secs
 
-* 20 Generation
+* Generation 20, 25 secs
 
 ![20 gene](https://cloud.githubusercontent.com/assets/1481772/14900007/8e16f07e-0dc9-11e6-9d37-06cfc4a688d5.gif)
 
-25 secs
 
-* 60 Generation
+* Generation 60, almost a minute long
 
 ![60 gene](https://cloud.githubusercontent.com/assets/1481772/14900006/8e16eb24-0dc9-11e6-86f8-0a17a1cf14f4.gif)
-
-almost a minute long
