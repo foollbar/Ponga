@@ -1,6 +1,6 @@
 module Types (Move(..), Gene, Population,
               Radius, Position, Player(..), GenePlayer(..), UserPlayer(..), Game(..), PongGame,
-              GameResult(..)) where
+              GameResult(..), approxRate, approxRate') where
 
 import System.Random (Random(..))
 
@@ -51,3 +51,9 @@ instance Player GenePlayer where
 data GameResult a b = GLeft a   -- winner
                     | GRight b
                     | NotFinished
+
+approxRate :: Int
+approxRate = 8
+
+approxRate' :: Float
+approxRate' = fromIntegral approxRate

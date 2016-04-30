@@ -9,7 +9,7 @@ type Simulation = Game GenePlayer GenePlayer
 initialSimulation :: Gene -> Gene -> Simulation
 initialSimulation g1 g2 =
   Game { ballLoc = (-10, 30)
-       , ballVel = (200, -300)
+       , ballVel = (150, -300)
        , p1 = GenePlayer D g1 (-25)
        , p2 = GenePlayer D g2 (-40) 
        , result = NotFinished 
@@ -31,8 +31,8 @@ interpretGene :: Simulation -> Simulation
 interpretGene game =
   let (bx, by) = normalize (ballLoc game)
       q  = doubrant (ballVel game)
-      m1 = gene (p1 game) !! (q*64 + bx*8 + by)
-      m2 = gene (p2 game) !! (q*64 + bx*8 + by)
+      m1 = gene (p1 game) !! (q*(approxRate*approxRate) + bx*approxRate + by)
+      m2 = gene (p2 game) !! (q*(approxRate*approxRate) + bx*approxRate + by)
   in game { p1 = (p1 game) { move = m1 }, p2 = (p2 game) { move = m2 } }
 
 progress :: Float -> Simulation -> Simulation

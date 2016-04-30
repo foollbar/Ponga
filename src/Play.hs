@@ -39,7 +39,7 @@ interpretGene' :: PongGame -> PongGame
 interpretGene' game =
   let (bx, by) = normalize (ballLoc game)
       q = doubrant (ballVel game)
-      m = gene (p2 game) !! (q*64 + bx*8 + by)
+      m = gene (p2 game) !! (q*(approxRate*approxRate) + bx*approxRate + by)
   in game { p2 = (p2 game) { move = m } }
 
 update' :: Float -> PongGame -> PongGame

@@ -16,11 +16,40 @@ window = InWindow "Pong" (width, height) (offset, offset)
 background :: Color
 background = black
 
+
+boxWidth = width'/approxRate'
+boxHeight = height'/approxRate'
+
+grid :: Picture
+grid = pictures (xs ++ ys) where
+  xs :: [Picture]
+  xs = map (\x -> translate (-width'/2 + x) 0 $ color gridColor $ rectangleSolid 1 height') px
+  
+  ys :: [Picture]
+  ys = map (\y -> translate 0 (-height'/2 + y) $ color gridColor $ rectangleSolid width' 1) py
+  
+  px :: [Float]
+  px = takeWhile (<= width') $ iterate (+ boxWidth) 0
+  
+  py :: [Float]
+  py = takeWhile (<= height') $ iterate (+ boxHeight) 0
+  
+  gridColor = greyN 0.1
+
+highlightBox :: (Float, Float) -> Picture
+highlightBox p =
+  let (x,y) = normalize p
+      (x',y') = (fromIntegral x, fromIntegral y)
+  in translate ((-width'/2 + boxWidth/2) + x'*boxWidth)
+               ((-height'/2 + boxHeight/2) + y'*boxHeight) $
+                 color red $ rectangleWire boxWidth boxHeight
+
 render :: (Player a, Player b) => Game a b -> Picture
-render game =
-  pictures [ball, walls,
-            mkPaddle rose (-width'/2 + 30) $ getPos (p1 game),
-            mkPaddle orange (width'/2 - 30) $ getPos (p2 game)]
+render game = pictures 
+  [ ball, walls, grid, highlightBox (ballLoc game)
+  , mkPaddle rose (-width'/2 + 30) $ getPos (p1 game)
+  , mkPaddle orange (width'/2 - 30) $ getPos (p2 game)
+  ]
   where
     ball = uncurry translate (ballLoc game) $ color ballColor $ circleSolid 10
     ballColor = dark red

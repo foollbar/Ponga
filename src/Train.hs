@@ -36,7 +36,7 @@ selectPair :: (Population, Population) -> IO ((Gene, Gene), (Gene, Gene))
 selectPair (a,b) = do
   p1 <- selectRandomGenes 5 a
   p2 <- selectRandomGenes 5 b
-  
+
   p1' <- selectRandomGenes 5 a
   p2' <- selectRandomGenes 5 b
 
@@ -57,7 +57,7 @@ crossOver ((a,b), (c,d)) = (,) <$> mapM cross (zip a c) <*> mapM cross (zip b d)
   cross (a,b) = do
     p <- randomIO :: IO Float
     return (if p < 0.5 then a else b)
-                     
+
 evolve :: (Population, Population) -> IO (Population, Population)
 evolve p = mapAndUnzipM id $ replicate populationSize (selectPair p >>= crossOver >>= mutate)
 
