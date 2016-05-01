@@ -1,3 +1,5 @@
+ {-# LANGUAGE RecordWildCards #-}
+
 module PongGame where
 
 import Types
@@ -22,30 +24,30 @@ normalize (x,y) =
   )
 
 moveBall :: Float -> Game a b -> Game a b
-moveBall seconds game = game { ballLoc = (x', y') }
+moveBall seconds Game{..} = Game { ballLoc = (x', y'), .. }
   where
-   (x, y) = ballLoc game
-   (vx, vy) = ballVel game
+   (x, y) = ballLoc
+   (vx, vy) = ballVel
 
    x' = x + vx * seconds
    y' = y + vy * seconds
 
 paddleBounce :: (Player a, Player b) => Game a b -> Game a b
-paddleBounce game = game { ballVel = (vx', vy') } where
-  p1y = getPos $ p1 game
-  p2y = getPos $ p2 game
-  (vx, vy) = ballVel game
-  vx' = if paddleCollision1 (ballLoc game) p1y p2y
+paddleBounce Game{..} = Game { ballVel = (vx', vy'), ..} where
+  p1y = getPos p1
+  p2y = getPos p2
+  (vx, vy) = ballVel
+  vx' = if paddleCollision1 ballLoc p1y p2y
           then -vx
           else vx
-  vy' = if paddleCollision2 (ballLoc game) p1y p2y
+  vy' = if paddleCollision2 ballLoc p1y p2y
           then -vy
           else vy
 
 wallBounce :: Game a b -> Game a b
-wallBounce game = game { ballVel = (vx, vy') } where
-  (vx, vy) = ballVel game
-  vy' = if wallCollision (ballLoc game)
+wallBounce Game{..} = Game { ballVel = (vx, vy'), .. } where
+  (vx, vy) = ballVel
+  vy' = if wallCollision ballLoc
           then -vy
           else vy
 
@@ -68,11 +70,11 @@ paddleCollision2 (x, y) p1y p2y = aCollision || bCollision where
   bCollision = x >= p2x+3 && inBound (p2y - 43) (p2y + 43) y
 
 checkFinish :: Game a b -> Game a b
-checkFinish g =
-  let (x, y) = ballLoc g in
+checkFinish Game{..} =
+  let (x, y) = ballLoc in
   if x < -(width'/2) + 10
-    then g { result = GLeft (p1 g) }
+    then Game { result = Finished, .. }
     else if x > (width'/2) - 10
-           then g { result = GRight (p2 g) }
-           else g { result = NotFinished }
+           then Game { result = Finished, .. }
+           else Game { result = NotFinished, .. }
 

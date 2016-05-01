@@ -1,3 +1,5 @@
+ {-# LANGUAGE Rank2Types #-}
+
 module Types (Move(..), Gene, Population,
               Radius, Position, Player(..), GenePlayer(..), UserPlayer(..), Game(..), PongGame,
               GameResult(..), approxRate, approxRate') where
@@ -19,9 +21,9 @@ type Position = (Float, Float)
 data Game a b = Game
   { ballLoc :: (Float, Float)
   , ballVel :: (Float, Float)
-  , p1 :: a
+  , p1 :: a 
   , p2 :: b
-  , result :: GameResult a b
+  , result :: GameResult
   }
 
 type PongGame = Game UserPlayer GenePlayer
@@ -48,9 +50,7 @@ instance Player GenePlayer where
   getPos = gpos
   setPos p f = p { gpos = f (gpos p) }
 
-data GameResult a b = GLeft a   -- winner
-                    | GRight b
-                    | NotFinished
+data GameResult = Finished | NotFinished
 
 approxRate :: Int
 approxRate = 8

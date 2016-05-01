@@ -1,3 +1,5 @@
+ {-# LANGUAGE RecordWildCards #-}
+
 module GUI (window, background, fps, render, handleKeys, play, simulate) where
 
 import Graphics.Gloss
@@ -45,13 +47,13 @@ highlightBox p =
                  color red $ rectangleWire boxWidth boxHeight
 
 render :: (Player a, Player b) => Game a b -> Picture
-render game = pictures 
-  [ ball, walls, grid, highlightBox (ballLoc game)
-  , mkPaddle rose (-width'/2 + 30) $ getPos (p1 game)
-  , mkPaddle orange (width'/2 - 30) $ getPos (p2 game)
+render Game{..} = pictures 
+  [ ball, walls, grid, highlightBox ballLoc
+  , mkPaddle rose (-width'/2 + 30) $ getPos p1
+  , mkPaddle orange (width'/2 - 30) $ getPos p2
   ]
   where
-    ball = uncurry translate (ballLoc game) $ color ballColor $ circleSolid 10
+    ball = uncurry translate ballLoc $ color ballColor $ circleSolid 10
     ballColor = dark red
 
     wall :: Float -> Picture
@@ -78,9 +80,9 @@ setMovingDown :: Bool -> UserPlayer -> UserPlayer
 setMovingDown b u = u { movingDown = b }
 
 handleKeys :: Event -> PongGame -> PongGame
-handleKeys (EventKey (Char 'i') Down _ _) game = game { p1 = setMovingUp   True (p1 game) }
-handleKeys (EventKey (Char 'k') Down _ _) game = game { p1 = setMovingDown True (p1 game) }
-handleKeys (EventKey (Char 'i') Up _ _)   game = game { p1 = setMovingUp   False (p1 game) }
-handleKeys (EventKey (Char 'k') Up _ _)   game = game { p1 = setMovingDown False (p1 game) }
+handleKeys (EventKey (Char 'i') Down _ _) Game{..} = Game { p1 = setMovingUp   True p1, .. }
+handleKeys (EventKey (Char 'k') Down _ _) Game{..} = Game { p1 = setMovingDown True p1, .. }
+handleKeys (EventKey (Char 'i') Up _ _)   Game{..} = Game { p1 = setMovingUp   False p1, .. }
+handleKeys (EventKey (Char 'k') Up _ _)   Game{..} = Game { p1 = setMovingDown False p1, .. }
 handleKeys _ game = game
 
