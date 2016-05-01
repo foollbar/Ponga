@@ -19,8 +19,8 @@ background :: Color
 background = black
 
 
-boxWidth = width'/approxRate'
-boxHeight = height'/approxRate'
+boxWidth = width'/factor'
+boxHeight = height'/factor'
 
 grid :: Picture
 grid = pictures (xs ++ ys) where

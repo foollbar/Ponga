@@ -19,8 +19,8 @@ lowerBound = (-height' / 2) + 10 + 43
 
 normalize :: (Float, Float) -> (Int, Int)
 normalize (x,y) =
-  ( round ((x + width'/2)  * (approxRate' - 1) / width')
-  , round ((y + height'/2) * (approxRate' - 1) / height')
+  ( round ((x + width'/2)  * (factor' - 1) / width')
+  , round ((y + height'/2) * (factor' - 1) / height')
   )
 
 moveBall :: Float -> Game a b -> Game a b

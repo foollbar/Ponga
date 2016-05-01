@@ -1,8 +1,6 @@
- {-# LANGUAGE Rank2Types #-}
-
 module Types (Move(..), Gene, Population,
               Radius, Position, Player(..), GenePlayer(..), UserPlayer(..), Game(..), PongGame,
-              GameResult(..), approxRate, approxRate') where
+              GameResult(..), factor, factor') where
 
 import System.Random (Random(..))
 
@@ -52,8 +50,8 @@ instance Player GenePlayer where
 
 data GameResult = Finished | NotFinished
 
-approxRate :: Int
-approxRate = 8
+factor :: Int
+factor = 8
 
-approxRate' :: Float
-approxRate' = fromIntegral approxRate
+factor' :: Float
+factor' = fromIntegral factor

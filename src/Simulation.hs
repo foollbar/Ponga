@@ -31,8 +31,8 @@ interpretGene :: Simulation -> Simulation
 interpretGene game =
   let (bx, by) = normalize (ballLoc game)
       q  = doubrant (ballVel game)
-      m1 = gene (p1 game) !! (q*(approxRate*approxRate) + bx*approxRate + by)
-      m2 = gene (p2 game) !! (q*(approxRate*approxRate) + bx*approxRate + by)
+      m1 = gene (p1 game) !! (q*(factor*factor) + bx*factor + by)
+      m2 = gene (p2 game) !! (q*(factor*factor) + bx*factor + by)
   in game { p1 = (p1 game) { move = m1 }, p2 = (p2 game) { move = m2 } }
 
 progress :: Float -> Simulation -> Simulation
